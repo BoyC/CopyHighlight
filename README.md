@@ -4,32 +4,15 @@ A small Visual Studio VSIX that flashes the **selection area** (not the text for
 
 <img width="819" height="387" alt="CopyHighlight" src="https://github.com/user-attachments/assets/f54f5d69-c1fe-41e9-b448-f080ccdf25d1" />
 
-## Behavior
+This is a small editor feature that [Gargaj](https://github.com/Gargaj) originally built into the game client of [Perpetuum](http://www.perpetuum-online.com/) because "everyone has pasted stuff into IRC they didn't want to". It's been a staple of all UI systems I wrote for the past 20 years and now with the power of Codex I brought it to Visual Studio finally (since who has time to figure out the whole VS plugin system and adornment API for something as small as this)
 
-- Trigger: `Edit.Copy` / `Ctrl+C`
-- Scope:
-  - normal editor text views
-  - common Output window text views (`Output`, `BuildOutput`, `BuildOrderOutput`, `DebugOutput`, `TestsOutput`)
-- Animation:
-  - default duration: ~0.20 seconds
-  - interpolation: **perceptually linear** color blending in Oklab, which looks visually more even than raw sRGB interpolation
-  - visible color path: brighter selection appearance -> original selection appearance
-  - implementation detail: the flash samples Visual Studio's own selection adornments and uses each real selection visual as an opacity mask, so it follows the shape currently painted by the editor instead of reconstructing selection geometry
-- Settings:
-  - `Tools > Options > Selection Copy Flash > General`
-  - `Duration (ms)`
-  - `Brightness (%)`
+## Config
 
-The extension intentionally does **nothing** when the selection is empty.
+Settings for flash brightness and duration can be found in the VS Options dialog under Selection Copy Flash:
 
-## How it works
+<img width="744" height="434" alt="image" src="https://github.com/user-attachments/assets/12b108c2-ee41-4abe-adc9-3c809e00e2e9" />
 
-1. A chained editor command handler intercepts `CopyCommandArgs`.
-2. It calls Visual Studio's built-in copy handler.
-3. It paints a viewport-relative flash rectangle.
-4. Each flash rectangle uses a `VisualBrush` of the corresponding editor-created selection adornment as its opacity mask.
-5. A frame-synchronized render loop computes the target visible selection color, solves the overlay needed to produce it over the existing selection, and then fades that overlay all the way to transparent.
-6. The options page stores duration and brightness in Visual Studio's user settings store.
+For light themes the brightness can be set to negativ values to darken instead of brighten the color.
 
 ## Build and run
 
@@ -42,8 +25,3 @@ The extension intentionally does **nothing** when the selection is empty.
    - select text
    - press `Ctrl+C`
 6. Optional: open `Tools > Options > Selection Copy Flash > General` and tune the animation.
-
-## Notes
-
-- The project builds against .NET Framework 4.8.1 reference assemblies but the VSIX does not declare a separate .NET Framework installer dependency.
-- If you want to support additional specialized panes, add more `[ContentType(...)]` attributes to `CopySelectionFlashCommandHandler`.
