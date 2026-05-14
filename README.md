@@ -2,6 +2,8 @@
 
 A small Visual Studio VSIX that flashes the **selection area** (not the text foreground) when selected text is copied.
 
+<img width="819" height="387" alt="CopyHighlight" src="https://github.com/user-attachments/assets/f54f5d69-c1fe-41e9-b448-f080ccdf25d1" />
+
 ## Behavior
 
 - Trigger: `Edit.Copy` / `Ctrl+C`
