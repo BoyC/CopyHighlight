@@ -12,7 +12,7 @@ Settings for flash brightness and duration can be found in the VS Options dialog
 
 <img width="744" height="434" alt="image" src="https://github.com/user-attachments/assets/12b108c2-ee41-4abe-adc9-3c809e00e2e9" />
 
-For light themes the brightness can be set to negativ values to darken instead of brighten the color.
+For light themes the brightness can be set to negative values to darken instead of brighten the color.
 
 ## Build and run
 
